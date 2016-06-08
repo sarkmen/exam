@@ -5,7 +5,12 @@ from .forms import CategoryForm, ShopForm, ReviewForm
 
 
 def index(request):
-    return render(request, 'shopping/index.html')
+    category_list = Category.objects.all()
+    review_list = Review.objects.all().order_by('-created_at')[:9]
+    return render(request, 'shopping/index.html', {
+        'category_list' : category_list,
+        'review_list' : review_list,
+        })
 
 
 def category_new(request):

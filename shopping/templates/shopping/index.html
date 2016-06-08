@@ -1,1 +1,16 @@
-hello, world!
+{% for category in category_list %}
+{{category.name}}
+    {% for shop in category.shop_set.all %}
+        {{shop.name}}
+        <img src='{{shop.image1.url}}'/>
+    {% endfor %}
+
+    <li><a href="{% url 'shopping:shop_new' category.pk %}">새로운 가게 만들기</a></li>
+{% endfor %}
+
+{% for review in review_list %}
+    {{review.message}}
+    {{review.created_at}}
+{% endfor %}
+
+<li><a href="{% url 'shopping:category_new' %}">새로운 카테고리 만들기</a></li>
