@@ -1,22 +1,30 @@
 {% extends 'shopping/base.html' %}
 
 {% block content %}
+    <div class="row">
+        <li class="btn btn-default"><a href="{% url 'shopping:category_new' %}">새로운 카테고리 만들기</a></li>
+        {% for category in category_list %}
+        <div class="col-sm-12">
+            <a href="{% url 'shopping:category_detail' category.pk %}">
+            {{category.name}}
+            </a>
+            {% for shop in category.shop_set.all %}
+            <div class="col-sm-4 caption">
+                <a href="{% url 'shopping:shop_detail' category.pk shop.pk %}">
+                {{shop.name}}
+                <img src='{{shop.image1.url}}' style="max-width: 100%;"/>
+                </a>
+            </div>
+            {% endfor %}
+            <p></p>
+            <li class="btn btn-default"><a href="{% url 'shopping:shop_new' category.pk %}">새로운 가게 만들기</a></li>
+            <hr/>
+        {% endfor %}
 
-{% for category in category_list %}
-{{category.name}}
-    {% for shop in category.shop_set.all %}
-        {{shop.name}}
-        <img src='{{shop.image1.url}}'/>
-    {% endfor %}
+        {% for review in review_list %}
+            {{review.message}}
+            {{review.created_at}}
+        {% endfor %}
 
-    <li><a href="{% url 'shopping:shop_new' category.pk %}">새로운 가게 만들기</a></li>
-{% endfor %}
-
-{% for review in review_list %}
-    {{review.message}}
-    {{review.created_at}}
-{% endfor %}
-
-<li><a href="{% url 'shopping:category_new' %}">새로운 카테고리 만들기</a></li>
-
+    </div>
 {% endblock %}
