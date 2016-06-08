@@ -1,3 +1,7 @@
+{% extends 'shopping/base.html' %}
+
+{% block content %}
+
 {% for category in category_list %}
 {{category.name}}
     {% for shop in category.shop_set.all %}
@@ -14,3 +18,5 @@
 {% endfor %}
 
 <li><a href="{% url 'shopping:category_new' %}">새로운 카테고리 만들기</a></li>
+
+{% endblock %}
