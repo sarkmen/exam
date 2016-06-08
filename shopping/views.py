@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Category, Shop, Review
@@ -18,6 +19,7 @@ def category_new(request):
         form = CategoryForm(request.POST)
         if form.is_valid():
             category = form.save()
+            messages.success(request, '새로운 카테고리가 등록되었습니다.')
             return redirect('shopping:category_detail', category.pk)
     else:
         form = CategoryForm()
@@ -32,6 +34,7 @@ def category_edit(request, pk):
         form = CategoryForm(request.POST, instance=category)
         if form.is_valid():
             category = form.save()
+            messages.success(request, '카테고리가 수정되었습니다.')
             return redirect('shopping:category_detail', category.pk)
     else:
         form = CategoryForm()
@@ -55,6 +58,7 @@ def shop_new(request, category_pk):
             shop = form.save(commit=False)
             shop.category = category
             shop.save()
+            messages.success(request, '새로운 가게가 등록되었습니다.')
             return redirect('shopping:shop_detail', category.pk, shop.pk)
     else:
         form = ShopForm()
@@ -72,6 +76,7 @@ def shop_edit(request, category_pk, pk):
             shop = form.save(commit=False)
             shop.category = category
             shop.save()
+            messages.success(request, '가게가 수정되었습니다.')
             return redirect('shopping:shop_detail', category.pk, shop.pk)
     else:
         form = ShopForm()
@@ -99,6 +104,7 @@ def review_new(request, category_pk, shop_pk):
             review.shop = shop
             review.user = request.user
             review.save()
+            messages.success(request, '새로운 리뷰가 등록되었습니다.')
             return redirect('shopping:shop_detail', category.pk, shop.pk)
     else:
         form = ReviewForm()
@@ -118,6 +124,7 @@ def review_edit(request, category_pk, shop_pk, pk):
             review.shop = shop
             review.user = request.user
             review.save()
+            messages.success(request, '리뷰가 수정되었습니다.')
             return redirect('shopping:shop_detail', category.pk, shop.pk)
     else:
         form = ReviewForm(instance=review)
