@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^accounts/', include('accounts.urls')),
     url(r'^shopping/', include('shopping.urls', namespace='shopping')),
     url(r'^$', lambda request: redirect('/shopping/')),
 ]
