@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Category, Shop, Review
@@ -13,7 +14,7 @@ def index(request):
         'review_list' : review_list,
         })
 
-
+@login_required
 def category_new(request):
     if request.method == "POST":
         form = CategoryForm(request.POST)
@@ -28,6 +29,7 @@ def category_new(request):
         })
 
 
+@login_required
 def category_edit(request, pk):
     category = get_object_or_404(Category, pk=pk)
     if request.method == "POST":
@@ -50,6 +52,7 @@ def category_detail(request, pk):
         })
 
 
+@login_required
 def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     category.delete()
@@ -58,6 +61,7 @@ def category_delete(request, pk):
 
 
 
+@login_required
 def shop_new(request, category_pk):
     category = get_object_or_404(Category, pk=category_pk)
     if request.method == "POST":
@@ -75,6 +79,7 @@ def shop_new(request, category_pk):
         })
 
 
+@login_required
 def shop_edit(request, category_pk, pk):
     category = get_object_or_404(Category, pk=category_pk)
     shop = get_object_or_404(Shop, pk=pk)
@@ -102,6 +107,7 @@ def shop_detail(request, category_pk, pk):
         })
 
 
+@login_required
 def shop_delete(request, category_pk, pk):
     shop = get_object_or_404(Shop, pk=pk)
     shop.delete()
@@ -109,6 +115,7 @@ def shop_delete(request, category_pk, pk):
     return redirect('shopping:category_detail', category_pk)
 
 
+@login_required
 def review_new(request, category_pk, shop_pk):
     category = get_object_or_404(Category, pk=category_pk)
     shop = get_object_or_404(Shop, pk=shop_pk)
@@ -128,6 +135,7 @@ def review_new(request, category_pk, shop_pk):
         })
 
 
+@login_required
 def review_edit(request, category_pk, shop_pk, pk):
     category = get_object_or_404(Category, pk=category_pk)
     shop = get_object_or_404(Shop, pk=shop_pk)
@@ -148,6 +156,7 @@ def review_edit(request, category_pk, shop_pk, pk):
         })
 
 
+@login_required
 def review_delete(request, category_pk, shop_pk, pk):
     review = get_object_or_404(Review, pk=pk)
     review.delete()
