@@ -9,5 +9,7 @@ urlpatterns = [
     url(r'^category/(?P<category_pk>\d+)/shop/new/$', views.shop_new, name='shop_new'),
     url(r'^category/(?P<category_pk>\d+)/shop/(?P<pk>\d+)/edit/$', views.shop_edit, name='shop_edit'),
     url(r'^category/(?P<category_pk>\d+)/shop/(?P<pk>\d+)/$', views.shop_detail, name='shop_detail'),
+    url(r'^category/(?P<category_pk>\d+)/shop/(?P<shop_pk>\d+)/review/new/$', views.review_new, name='review_new'),
+    url(r'^category/(?P<category_pk>\d+)/shop/(?P<shop_pk>\d+)/review/(?P<pk>\d+)/edit/$', views.review_edit, name='review_edit'),
 
 ]

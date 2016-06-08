@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .models import Category, Shop
-from .forms import CategoryForm, ShopForm
+from .models import Category, Shop, Review
+from .forms import CategoryForm, ShopForm, ReviewForm
 
 
 def index(request):
@@ -81,4 +81,41 @@ def shop_detail(request, category_pk, pk):
     return render(request, 'shopping/shop_detail.html', {
         'category' : category,
         'shop' : shop,
+        })
+
+
+def review_new(request, category_pk, shop_pk):
+    category = get_object_or_404(Category, pk=category_pk)
+    shop = get_object_or_404(Shop, pk=shop_pk)
+    if request.method == "POST":
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.shop = shop
+            review.user = request.user
+            review.save()
+            return redirect('shopping:shop_detail', category.pk, shop.pk)
+    else:
+        form = ReviewForm()
+    return render(request, 'shopping/review_form.html', {
+        'form' : form,
+        })
+
+
+def review_edit(request, category_pk, shop_pk, pk):
+    category = get_object_or_404(Category, pk=category_pk)
+    shop = get_object_or_404(Shop, pk=shop_pk)
+    review = get_object_or_404(Review, pk=pk)
+    if request.method == "POST":
+        form = ReviewForm(request.POST, request.FILES, instance=review)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.shop = shop
+            review.user = request.user
+            review.save()
+            return redirect('shopping:shop_detail', category.pk, shop.pk)
+    else:
+        form = ReviewForm(instance=review)
+    return render(request, 'shopping/review_form.html', {
+        'form' : form
         })
