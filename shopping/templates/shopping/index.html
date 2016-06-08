@@ -12,6 +12,9 @@
                         <a href="{% url 'shopping:shop_new' category.pk %}">새로운 가게 만들기</a>
                     </li>
                     <li class="btn btn-default">
+                        <a href="{% url 'shopping:category_edit' category.pk %}">카테고리 수정하기</a>
+                    </li>
+                    <li class="btn btn-default">
                         <a href="{% url 'shopping:category_delete' category.pk %}">카테고리 삭제하기</a>
                     </li>
                 </h1>
@@ -20,18 +23,21 @@
                 {% for shop in category.shop_set.all %}
                 <div class="col-sm-4 caption">
                     <a href="{% url 'shopping:shop_detail' category.pk shop.pk %}">
-                    {{shop.name}}
+                    <h3>{{shop.name}}</h3>
                     <img src='{{shop.image1.url}}' style="max-width: 100%;"/>
                     </a>
                 </div>
                 {% endfor %}
             </div>
             <hr/>
+        </div>
         {% endfor %}
-
+        <h2>최근 리뷰 목록</h2>
         {% for review in review_list %}
-            {{review.message}}
+            <h5>
+            {{review.message}} by {{review.user}} |
             {{review.created_at}}
+            </h5>
         {% endfor %}
 
     </div>

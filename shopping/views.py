@@ -99,7 +99,6 @@ def shop_detail(request, category_pk, pk):
     return render(request, 'shopping/shop_detail.html', {
         'category' : category,
         'shop' : shop,
-        'form' : ReviewForm(),
         })
 
 

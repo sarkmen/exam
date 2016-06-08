@@ -19,21 +19,16 @@
 </div>
 
 <hr/>
-<h4>댓글 쓰기</h4>
-<form action="" enctype="multipart/form-data" method="POST">
-    {% csrf_token %}
-    <table>
-        {% bootstrap_form form %}
-    </table>
-    <input type="submit">
-</form>
+<li class="btn btn-default"><a href="{% url 'shopping:review_new' category.pk shop.pk %}">댓글 쓰기<a></li>
 <ul>
 {% for review in shop.review_set.all %}
     <li>
+        <img src="{{review.image.url}}"/>
         {{review.message}}
         by {{review.user}}
         {{review.created_at}}
         <a href="{% url 'shopping:review_edit' category.pk shop.pk review.pk %}">수정</a>
+        <a href="{% url 'shopping:review_delete' category.pk shop.pk review.pk %}">삭제</a>
     </li>
 {% endfor %}
 </ul>

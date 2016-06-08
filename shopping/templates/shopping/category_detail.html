@@ -4,7 +4,9 @@
 {% block content %}
     <h1>{{category.name}}
         <li class="btn btn-default"><a href="{% url 'shopping:shop_new' category.pk %}">새로운 가게 만들기</a></li>
-        <li class="btn btn-default"><a href="{% url 'shopping:category_delete' category.pk %}">카테고리 삭제하기</a></li></h1>
+        <li class="btn btn-default"><a href="{% url 'shopping:category_edit' category.pk %}">카테고리 수정하기</a></li>
+        <li class="btn btn-default"><a href="{% url 'shopping:category_delete' category.pk %}">카테고리 삭제하기</a></li>
+    </h1>
         <div class="col-sm-12">
             {% for shop in category.shop_set.all %}
             <div class="col-sm-4 caption">

@@ -7,6 +7,8 @@
     <table>
         {% bootstrap_form form %}
     </table>
-    <input type="submit">
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">{% bootstrap_icon "ok-sign" %} 리뷰 남기기</button>
+    {% endbuttons %}
 </form>
 {% endblock %}
