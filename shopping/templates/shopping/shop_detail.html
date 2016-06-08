@@ -1,5 +1,40 @@
 {% extends 'shopping/base.html' %}
+{% load bootstrap3 %}
 
 {% block content %}
-{{shop.name}}
+<h1>{{shop.name}}</h1>
+<h3>전화번호 : {{shop.phone}} 주소 : {{shop.address}}</h3>
+<hr/>
+<h6>{{shop.intro}}</h6>
+<div class="col-sm-12">
+    <div class="col-sm-4">
+    <img src="{{shop.image1.url}}" style="max-width: 100%;"/>
+    </div>
+    <div class="col-sm-4">
+    <img src="{{shop.image2.url}}" style="max-width: 100%;"/>
+    </div>
+    <div class="col-sm-4">
+    <img src="{{shop.image3.url}}" style="max-width: 100%;"/>
+    </div>
+</div>
+
+<hr/>
+<h4>댓글 쓰기</h4>
+<form action="" enctype="multipart/form-data" method="POST">
+    {% csrf_token %}
+    <table>
+        {% bootstrap_form form %}
+    </table>
+    <input type="submit">
+</form>
+<ul>
+{% for review in shop.review_set.all %}
+    <li>
+        {{review.message}}
+        by {{review.user}}
+        {{review.created_at}}
+        <a href="{% url 'shopping:review_edit' category.pk shop.pk review.pk %}">수정</a>
+    </li>
+{% endfor %}
+</ul>
 {% endblock %}

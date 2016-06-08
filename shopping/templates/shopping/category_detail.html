@@ -1,5 +1,21 @@
 {% extends 'shopping/base.html' %}
+{% load bootstrap3 %}
 
 {% block content %}
-{{category.name}}
+    <h1>{{category.name}}
+        <li class="btn btn-default"><a href="{% url 'shopping:shop_new' category.pk %}">새로운 가게 만들기</a></li>
+        <li class="btn btn-default"><a href="{% url 'shopping:category_delete' category.pk %}">카테고리 삭제하기</a></li></h1>
+        <div class="col-sm-12">
+            {% for shop in category.shop_set.all %}
+            <div class="col-sm-4 caption">
+                <a href="{% url 'shopping:shop_detail' category.pk shop.pk %}">
+                {{shop.name}}
+                <img src='{{shop.image1.url}}' style="max-width: 100%;"/>
+                </a>
+                <li class="btn btn-default"><a href="{% url 'shopping:shop_edit' category.pk shop.pk %}">가게 수정하기</a></li>
+                <li class="btn btn-default"><a href="{% url 'shopping:shop_delete' category.pk shop.pk %}">가게 삭제하기</a></li>
+            </div>
+            {% endfor %}
+        </div>
+        <hr/>
 {% endblock %}

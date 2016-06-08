@@ -50,6 +50,14 @@ def category_detail(request, pk):
         })
 
 
+def category_delete(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    category.delete()
+    messages.error(request, "카테고리가 삭제되었습니다.")
+    return redirect('shopping:index')
+
+
+
 def shop_new(request, category_pk):
     category = get_object_or_404(Category, pk=category_pk)
     if request.method == "POST":
@@ -91,7 +99,15 @@ def shop_detail(request, category_pk, pk):
     return render(request, 'shopping/shop_detail.html', {
         'category' : category,
         'shop' : shop,
+        'form' : ReviewForm(),
         })
+
+
+def shop_delete(request, category_pk, pk):
+    shop = get_object_or_404(Shop, pk=pk)
+    shop.delete()
+    messages.error(request, "가게가 삭제되었습니다.")
+    return redirect('shopping:category_detail', category_pk)
 
 
 def review_new(request, category_pk, shop_pk):
@@ -131,3 +147,10 @@ def review_edit(request, category_pk, shop_pk, pk):
     return render(request, 'shopping/review_form.html', {
         'form' : form
         })
+
+
+def review_delete(request, category_pk, shop_pk, pk):
+    review = get_object_or_404(Review, pk=pk)
+    review.delete()
+    messages.error(request, "리뷰가 삭제되었습니다.")
+    return redirect('shopping:shop_detail', category_pk, shop_pk)
