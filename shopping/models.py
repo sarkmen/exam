@@ -13,7 +13,7 @@ class Category(models.Model):
 class Shop(models.Model):
     category = models.ForeignKey(Category)
     name = models.CharField(max_length=40)
-    phone = models.CharField(max_length=10)
+    phone = models.CharField(max_length=20)
     address = models.CharField(max_length=100)
     intro = models.TextField()
     image1 = models.ImageField()
